@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 
 function Form(props) {
-    const [person, setPerson] = useState({
+  //Person is a state object with two properties: name and job, setPerson is a function that will update the state of person
+    const [person, setPerson] = useState({  
     name: "",
     job: ""
     });
