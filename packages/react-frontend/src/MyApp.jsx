@@ -1,6 +1,7 @@
 // src/MyApp.jsx
 import React, { useState } from "react";
 import Table from "./Table";
+import Form from "./Form";
 
 // const characters = [
 //   {
@@ -22,32 +23,15 @@ import Table from "./Table";
 // ];
 
 function MyApp() {
-  const [characters, setCharacters] = useState([
-    {
-      name: "Charlie",
-      job: "Janitor"
-    },
-    {
-      name: "Mac",
-      job: "Bouncer"
-    },
-    {
-      name: "Dee",
-      job: "Aspring actress"
-    },
-    {
-      name: "Dennis",
-      job: "Bartender"
-    } // the rest of the data
-  ]);
+  const [characters, setCharacters] = useState([]);
 
   return (
     <div className="container">
-      <Table 
-        characterData={characters} 
+      <Table
+        characterData={characters}
         removeCharacter={removeOneCharacter}
       />
-      
+      <Form />
     </div>
   );
 
