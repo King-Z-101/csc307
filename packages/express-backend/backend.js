@@ -1,5 +1,7 @@
 import express from "express";
 
+//export DEBUG='express:router' if you want to see error messages from GET/POST requests
+
 const users = {
     users_list: [
       {
