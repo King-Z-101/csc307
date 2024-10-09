@@ -46,7 +46,12 @@ const findUserByName = (name) => {
 
 //Find users by id through /users/:id get endpoint
 const findUserById = (id) =>
-  users["users_list"].find((user) => user["id"] === id);
+  users["users_list"].find((user) => user["id"] === id); //use find because we know our code should return one result since id is unique
+
+const addUser = (user) => {
+  users["users_list"].push(user);
+  return user;
+};
 
 
 app.get("/", (req, res) => {
@@ -62,6 +67,13 @@ app.get("/users", (req, res) => {
   } else {
     res.send(users);
   }
+});
+
+//http post method
+app.post("/users", (req, res) => {
+  const userToAdd = req.body;
+  addUser(userToAdd);
+  res.status(201).send();
 });
 
 // new enpoint to for getting users based on id
