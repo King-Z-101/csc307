@@ -37,16 +37,21 @@ const port = 8000;
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
-
 //Find users through /users get endpoint
 const findUserByName = (name) => {
   return users["users_list"].filter(
     (user) => user["name"] === name
   );
 };
+
+//Find users by id through /users/:id get endpoint
+const findUserById = (id) =>
+  users["users_list"].find((user) => user["id"] === id);
+
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 app.get("/users", (req, res) => {
   const name = req.query.name;
@@ -56,6 +61,17 @@ app.get("/users", (req, res) => {
     res.send(result);
   } else {
     res.send(users);
+  }
+});
+
+// new enpoint to for getting users based on id
+app.get("/users/:id", (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = findUserById(id); //method
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
   }
 });
 
