@@ -69,7 +69,7 @@ app.get("/users", (req, res) => {
   }
 });
 
-//http post method
+//http post method (posts are not being saved after the server session ends!)
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
   addUser(userToAdd);
