@@ -48,9 +48,19 @@ const findUserByName = (name) => {
 const findUserById = (id) =>
   users["users_list"].find((user) => user["id"] === id); //use find because we know our code should return one result since id is unique
 
+//Find users by id through /users/:name/:job get endpoint
+const findUserByNameJob = (name, job) =>
+  users["users_list"].find((user) => user["name"] === name && user["job"] === job); //use find because we know our code should return one result since id is unique
+
+
 const addUser = (user) => {
   users["users_list"].push(user);
   return user;
+};
+
+const deleteUser = (user) => {
+  users["users_list"] = users["users_list"].filter(u => u.id !== user.id);
+  //return user;
 };
 
 
@@ -80,6 +90,30 @@ app.post("/users", (req, res) => {
 app.get("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result = findUserById(id); //method
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
+  }
+});
+
+// new enpoint for deleting users based on id
+app.delete("/users/:id", (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  let result = findUserById(id); //method
+  if (result === undefined) {
+    res.status(404).send("Resource (user) not found.");
+  } else {
+    deleteUser(result);
+    res.send(result);
+  }
+});
+
+// new enpoint to for getting users based on id
+app.get("/users/:name/:job", (req, res) => {
+  const name = req.params["name"]; //or req.params.id
+  const job = req.params["job"];
+  let result = findUserByNameJob(name, job); //method
   if (result === undefined) {
     res.status(404).send("Resource not found.");
   } else {
