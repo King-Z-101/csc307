@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 
 //export DEBUG='express:router' if you want to see error messages from GET/POST requests
 
@@ -35,6 +36,12 @@ const users = {
 const app = express();
 const port = 8000;
 
+//and then enable all CORS requests
+/*
+Note that, even running both of your frontend and backend in your computer, 
+they're running in different ports, so they're considered to be in 'different origins.' 
+*/
+app.use(cors());
 app.use(express.json());
 
 //Find users through /users get endpoint

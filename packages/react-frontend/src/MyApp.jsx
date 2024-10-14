@@ -1,5 +1,5 @@
 // src/MyApp.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form";
 
@@ -28,6 +28,23 @@ function MyApp() {
   function updateList(person) {
     setCharacters([...characters, person]);
   }
+
+  //IE3
+  useEffect(() => {
+    fetchUsers()
+      .then((res) => res.json())
+      .then((json) => setCharacters(json["users_list"]))
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+
+  function fetchUsers() {
+    const promise = fetch("http://localhost:8000/users");
+    return promise;
+  }
+
+  
 
   return (
     <div className="container">
