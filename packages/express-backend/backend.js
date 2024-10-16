@@ -69,6 +69,8 @@ const generateId = () => {
 
 const addUser = (user) => {
   user.id = generateId(); //add id to user object
+  //user.name = user.name;
+  //user.job = user.job;
   users["users_list"].push(user);
   return user;
 };
@@ -97,8 +99,8 @@ app.get("/users", (req, res) => {
 //http post method (posts are not being saved after the server session ends!)
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  addUser(userToAdd);
-  res.status(201).send();
+  const newUser = addUser(userToAdd);
+  res.status(201).send(newUser); //When an object is passed to send, Express will automatically convert it to JSON.
 });
 
 // new enpoint to for getting users based on id

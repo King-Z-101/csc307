@@ -3,25 +3,6 @@ import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import Form from "./Form";
 
-// const characters = [
-//   {
-//     name: "Charlie",
-//     job: "Janitor"
-//   },
-//   {
-//     name: "Mac",
-//     job: "Bouncer"
-//   },
-//   {
-//     name: "Dee",
-//     job: "Aspring actress"
-//   },
-//   {
-//     name: "Dennis",
-//     job: "Bartender"
-//   }
-// ];
-
 function MyApp() {
   const [characters, setCharacters] = useState([]);
 
@@ -31,11 +12,15 @@ function MyApp() {
       .then((res) => {
         if (res.status === 201) {
           //add the new user to the list of users in the state (characters)
-          setCharacters([...characters, person]); 
+          return res.json();
         }
         else {
-          console.log("Code 201 not received. User not added.");
+          throw new Error("Post failure");
         }
+      })
+      .then((json) => {
+        setCharacters([...characters, json]); 
+        console.log(json);
       })
       .catch((error) => {
         console.log(error);
@@ -92,6 +77,15 @@ function MyApp() {
   }
 
   function removeOneCharacter(index) {
+    //index.
+
+    // const promise = fetch("http://localhost:8000/users/${zan}", {
+    //   method: "DELETE",
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   },
+    //   body: JSON.stringify(characters[index])
+    // });
     const updated = characters.filter((character, i) => {
       return i !== index;
     });
