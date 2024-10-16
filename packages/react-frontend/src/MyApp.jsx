@@ -26,7 +26,11 @@ function MyApp() {
   const [characters, setCharacters] = useState([]);
 
   function updateList(person) {
-    setCharacters([...characters, person]);
+    postUser(person)
+      .then(() => setCharacters([...characters, person]))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   //IE3
@@ -44,7 +48,17 @@ function MyApp() {
     return promise;
   }
 
+  function postUser(person) {
+    const promise = fetch("http://localhost:8000/users", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(person)
+    });
   
+    return promise;
+  }
 
   return (
     <div className="container">
