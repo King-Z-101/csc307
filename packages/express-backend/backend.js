@@ -62,8 +62,13 @@ const findUserById = (id) =>
 const findUserByNameJob = (name, job) =>
   users["users_list"].find((user) => user["name"] === name && user["job"] === job); //use find because we know our code should return one result since id is unique
 
+const generateId = () => {
+  const newId = Math.random().toString()
+  return newId.slice(2,8); //return a random 6 digit number
+}
 
 const addUser = (user) => {
+  user.id = generateId(); //add id to user object
   users["users_list"].push(user);
   return user;
 };

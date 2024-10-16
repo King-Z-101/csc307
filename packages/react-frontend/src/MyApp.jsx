@@ -91,6 +91,13 @@ function MyApp() {
     return promise; // i.e. response object (check if the user was added/post successfully)
   }
 
+  function removeOneCharacter(index) {
+    const updated = characters.filter((character, i) => {
+      return i !== index;
+    });
+    setCharacters(updated);
+  }
+
   return (
     <div className="container">
       <Table
@@ -100,23 +107,6 @@ function MyApp() {
       <Form handleSubmit={updateList}/>
     </div>
   );
-
-  function removeOneCharacter(index) {
-    const updated = characters.filter((character, i) => {
-      return i !== index;
-    });
-    setCharacters(updated);
-  }
 }
 
 export default MyApp;
-
-/***
-  Steps to remove node_modules:
-  1. rm node_modules and .gitignore
-  2. push to github
-  3. npm install
-  4. echo " " > .gitignore (create the file in the editor)
-  5. go into the file and add "/node_modules"
-
-***/
