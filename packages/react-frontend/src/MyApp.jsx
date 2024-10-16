@@ -28,7 +28,15 @@ function MyApp() {
   function updateList(person) {
     postUser(person)
       //notice that the promise from postUser was not given a name and is being handled directly by the .then method
-      .then(() => setCharacters([...characters, person])) //add the new user to the list of users in the state (characters)
+      .then((res) => {
+        if (res.status === 201) {
+          //add the new user to the list of users in the state (characters)
+          setCharacters([...characters, person]); 
+        }
+        else {
+          console.log("Code 201 not received. User not added.");
+        }
+      })
       .catch((error) => {
         console.log(error);
       });
