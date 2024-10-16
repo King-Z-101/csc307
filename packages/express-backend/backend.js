@@ -40,6 +40,9 @@ const port = 8000;
 /*
 Note that, even running both of your frontend and backend in your computer, 
 they're running in different ports, so they're considered to be in 'different origins.' 
+This line is essential if your frontend application is hosted on a different domain than your backend server, 
+as it allows the frontend to communicate with the backend without being blocked by the browser's same-origin policy.
+5173(Front) and 8000(Back) are different ports, so they're considered to be in 'different origins.'
 */
 app.use(cors());
 app.use(express.json());
@@ -80,9 +83,9 @@ app.get("/users", (req, res) => {
   if (name != undefined) {
     let result = findUserByName(name);
     result = { users_list: result };
-    res.send(result);
+    res.send(result); //response for fetchUsers() in MyApp.jsx
   } else {
-    res.send(users);
+    res.send(users); //response for fetchUsers() in MyApp.jsx
   }
 });
 

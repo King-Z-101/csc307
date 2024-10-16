@@ -43,9 +43,15 @@ function MyApp() {
       });
   }, []);
 
+  //default fetch behavior is an HTTP GET request
+  /*
+  Purpose: The fetchUsers function makes an HTTP GET request to retrieve a list of users from http://localhost:8000/users.
+  Returns: It returns a Promise that resolves to the response from the server.
+  Usage: The returned Promise can be handled using .then and .catch to process the response or handle errors.
+  */
   function fetchUsers() {
     const promise = fetch("http://localhost:8000/users");
-    return promise;
+    return promise; // i.e. response object
   }
 
   function postUser(person) {
