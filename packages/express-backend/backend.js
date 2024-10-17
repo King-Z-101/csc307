@@ -119,10 +119,11 @@ app.delete("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
   let result = findUserById(id); //method
   if (result === undefined) {
-    res.status(404).send("Resource (user) not found.");
+    res.status(404).send("Resource not found.");
   } else {
     deleteUser(result);
-    res.send(result);
+    //send a 204 status code to indicate that the request has succeeded
+    res.status(204).send(result);
   }
 });
 

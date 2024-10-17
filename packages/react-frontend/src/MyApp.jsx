@@ -77,19 +77,25 @@ function MyApp() {
   }
 
   function removeOneCharacter(index) {
-    //index.
-
-    // const promise = fetch("http://localhost:8000/users/${zan}", {
-    //   method: "DELETE",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify(characters[index])
-    // });
-    const updated = characters.filter((character, i) => {
-      return i !== index;
+    //look in the state (characters) for the user with the index that was deleted
+    // template literal
+    const promise = fetch(`http://localhost:8000/users/${characters[index].id}`, { 
+        method: 'DELETE'
+    })
+    .then((res) => {
+      if (res.status === 204) {
+        //remove successful on backend, now remove from frontend
+        const updated = characters.filter((character, i) => {
+          return i !== index;
+        });
+        setCharacters(updated);
+      } else if (res.status === 404) {
+        throw new Error("Resource not found.");
+      }
+    })
+    .catch((error) => {
+      console.log(error);
     });
-    setCharacters(updated);
   }
 
   return (
