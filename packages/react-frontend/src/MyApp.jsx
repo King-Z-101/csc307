@@ -79,6 +79,9 @@ function MyApp() {
   function removeOneCharacter(index) {
     //look in the state (characters) for the user with the index that was deleted
     // template literal
+
+    //change id to _id
+    
     const promise = fetch(`http://localhost:8000/users/${characters[index].id}`, { 
         method: 'DELETE'
     })

@@ -21,7 +21,7 @@ function Form(props) {
         setPerson({ name: "", job: "" });
         
     }
-
+    //id to _id (2)
     return (
         <form>
           <label htmlFor="name">Name</label>
