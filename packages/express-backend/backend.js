@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 //import dotenv from "dotenv"; //not found apprently
 import mongoose from "mongoose";
+import userService from "./services/user-service";
 //import userService from "../services/user-service.js";
 
 //export DEBUG='express:router' if you want to see error messages from GET/POST requests
@@ -103,6 +104,16 @@ app.get("/", (req, res) => {
 
 app.get("/users", (req, res) => {
   const name = req.query.name;
+  const job = req.query.job;
+  userService.getUsers(name, job)
+    .then((success) => {res.status(200).send(success);})
+    .catch((error) => {
+      res.status(500).send("Get failed.");
+      console.log(error);
+    });
+  /*
+  IE3 incase this fails
+  const name = req.query.name;
   if (name != undefined) {
     let result = findUserByName(name);
     result = { users_list: result };
@@ -110,25 +121,37 @@ app.get("/users", (req, res) => {
   } else {
     res.send(users); //response for fetchUsers() in MyApp.jsx
   }
+  */
 });
 
 //http post method (posts are not being saved after the server session ends!)
+//Express route handler that responds with appropriate status code and message based on the return value of the method used
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
-  /*
+  
   userService.addUser(userToAdd)
-    .then((result) => {res.status(201).send(result);})
+    .then((success) => {res.status(201).send(success);})
     .catch((error) => {
       res.status(500).send("Post failed.");
       console.log(error);});
-  */
+  /*
   // IE3 incase this fails
   const newUser = addUser(userToAdd);
   res.status(201).send(newUser); //When an object is passed to send, Express will automatically convert it to JSON.
+  */
 });
 
 // new enpoint to for getting users based on id
 app.get("/users/:id", (req, res) => {
+  const id = req.params["id"]; //or req.params.id
+  userService.findUserById(id)
+    .then((success) => {res.status(200).send(success);})
+    .catch((error) => {
+      res.status(404).send("Resource not found.");
+      console.log(error);
+    });
+  /*
+  IE3 incase this fails
   const id = req.params["id"]; //or req.params.id
   let result = findUserById(id); //method
   if (result === undefined) {
@@ -136,6 +159,7 @@ app.get("/users/:id", (req, res) => {
   } else {
     res.send(result);
   }
+  */
 });
 
 // new enpoint for deleting users based on id
