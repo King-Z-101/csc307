@@ -1,6 +1,6 @@
 import express from "express";
 import cors from "cors";
-import userService from "../services/user-service.js";
+//import userService from "../services/user-service.js";
 
 //export DEBUG='express:router' if you want to see error messages from GET/POST requests
 
