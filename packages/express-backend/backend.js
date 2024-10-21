@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors";
+import userService from "../services/user-service.js";
 
 //export DEBUG='express:router' if you want to see error messages from GET/POST requests
 
@@ -67,6 +68,8 @@ const generateId = () => {
   return newId.slice(2,8); //return a random 6 digit number
 }
 
+
+//IE3 incase this fails
 const addUser = (user) => {
   user.id = generateId(); //add id to user object
   //user.name = user.name;
@@ -99,6 +102,14 @@ app.get("/users", (req, res) => {
 //http post method (posts are not being saved after the server session ends!)
 app.post("/users", (req, res) => {
   const userToAdd = req.body;
+  /*
+  userService.addUser(userToAdd)
+    .then((result) => {res.status(201).send(result);})
+    .catch((error) => {
+      res.status(500).send("Post failed.");
+      console.log(error);});
+  */
+  // IE3 incase this fails
   const newUser = addUser(userToAdd);
   res.status(201).send(newUser); //When an object is passed to send, Express will automatically convert it to JSON.
 });
