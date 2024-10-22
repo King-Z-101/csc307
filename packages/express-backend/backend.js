@@ -165,6 +165,15 @@ app.get("/users/:id", (req, res) => {
 // new enpoint for deleting users based on id
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
+  userService.findIdAndDelete(id)
+    .then((success) => {res.status(204).send(success);})
+    .catch((error) => {
+      res.status(404).send("Resource not found.");
+      console.log(error);
+    });
+  /*
+  IE3 incase this fails
+  const id = req.params["id"]; //or req.params.id
   let result = findUserById(id); //method
   if (result === undefined) {
     res.status(404).send("Resource not found.");
@@ -173,9 +182,10 @@ app.delete("/users/:id", (req, res) => {
     //send a 204 status code to indicate that the request has succeeded
     res.status(204).send(result);
   }
+  */
 });
 
-// new enpoint to for getting users based on id
+// new enpoint to for getting users based on name and job
 app.get("/users/:name/:job", (req, res) => {
   const name = req.params["name"]; //or req.params.id
   const job = req.params["job"];
