@@ -82,7 +82,7 @@ function MyApp() {
 
     //change id to _id
     
-    const promise = fetch(`http://localhost:8000/users/${characters[index].id}`, { 
+    const promise = fetch(`http://localhost:8000/users/${characters[index]._id}`, { 
         method: 'DELETE'
     })
     .then((res) => {

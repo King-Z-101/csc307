@@ -7,6 +7,7 @@ import userService from "./services/user-service";
 
 //export DEBUG='express:router' if you want to see error messages from GET/POST requests
 
+/*
 const users = {
     users_list: [
       {
@@ -36,8 +37,8 @@ const users = {
       }
     ]
 };
+*/
 
-/*
 dotenv.config();
 
 const { MONGO_CONNECTION_STRING } = process.env;
@@ -46,7 +47,6 @@ mongoose.set("debug", true);
 mongoose
   .connect(MONGO_CONNECTION_STRING)
   .catch((error) => console.log(error));
-*/
 
 const app = express();
 const port = 8000;
@@ -61,41 +61,6 @@ as it allows the frontend to communicate with the backend without being blocked 
 */
 app.use(cors());
 app.use(express.json());
-
-//Find users through /users get endpoint
-const findUserByName = (name) => {
-  return users["users_list"].filter(
-    (user) => user["name"] === name
-  );
-};
-
-//Find users by id through /users/:id get endpoint
-const findUserById = (id) =>
-  users["users_list"].find((user) => user["id"] === id); //use find because we know our code should return one result since id is unique
-
-//Find users by id through /users/:name/:job get endpoint
-const findUserByNameJob = (name, job) =>
-  users["users_list"].find((user) => user["name"] === name && user["job"] === job); //use find because we know our code should return one result since id is unique
-
-const generateId = () => {
-  const newId = Math.random().toString()
-  return newId.slice(2,8); //return a random 6 digit number
-}
-
-
-//IE3 incase this fails
-const addUser = (user) => {
-  user.id = generateId(); //add id to user object
-  //user.name = user.name;
-  //user.job = user.job;
-  users["users_list"].push(user);
-  return user;
-};
-
-const deleteUser = (user) => {
-  users["users_list"] = users["users_list"].filter(u => u.id !== user.id);
-  //return user;
-};
 
 
 app.get("/", (req, res) => {
@@ -202,3 +167,39 @@ app.listen(port, () => {
     `Example app listening at http://localhost:${port}`
   );
 });
+
+/*
+//Find users through /users get endpoint
+const findUserByName = (name) => {
+  return users["users_list"].filter(
+    (user) => user["name"] === name
+  );
+};
+//Find users by id through /users/:id get endpoint
+const findUserById = (id) =>
+  users["users_list"].find((user) => user["id"] === id); //use find because we know our code should return one result since id is unique
+
+//Find users by id through /users/:name/:job get endpoint
+const findUserByNameJob = (name, job) =>
+  users["users_list"].find((user) => user["name"] === name && user["job"] === job); //use find because we know our code should return one result since id is unique
+
+const generateId = () => {
+  const newId = Math.random().toString()
+  return newId.slice(2,8); //return a random 6 digit number
+}
+
+
+//IE3 incase this fails
+const addUser = (user) => {
+  user.id = generateId(); //add id to user object
+  //user.name = user.name;
+  //user.job = user.job;
+  users["users_list"].push(user);
+  return user;
+};
+
+const deleteUser = (user) => {
+  users["users_list"] = users["users_list"].filter(u => u.id !== user.id);
+  //return user;
+};
+*/
