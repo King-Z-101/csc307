@@ -83,14 +83,14 @@ app.delete("/users/:id", (req, res) => {
 
 // new enpoint to for getting users based on name and job
 app.get("/users/:name/:job", (req, res) => {
-  const name = req.params["name"]; //or req.params.id
-  const job = req.params["job"];
-  let result = findUserByNameJob(name, job); //method
-  if (result === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
-  }
+  const name = req.query.name;
+  const job = req.query.job;
+  userService.findUserByNameJob(name, job)
+    .then((success) => {res.status(200).send(success);})
+    .catch((error) => {
+      res.status(500).send("GET failed.");
+      console.log(error);
+    });
 });
 
 app.listen(port, () => {
