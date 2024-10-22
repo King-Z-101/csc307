@@ -40,7 +40,7 @@ function MyApp() {
   useEffect(() => {
     fetchUsers() // callback function (promised returned; i.e. response object)
       .then((res) => res.json()) //The first .then method takes the response (res) and calls res.json() to parse the JSON body of the response. This also returns a Promise.
-      .then((json) => setCharacters(json["users_list"]))
+      .then((json) => setCharacters(json))
       .catch((error) => {
         console.log(error);
       });

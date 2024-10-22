@@ -1,43 +1,11 @@
 import express from "express";
 import cors from "cors";
-//import dotenv from "dotenv"; //not found apprently
+import dotenv from "dotenv"; //not found apprently
 import mongoose from "mongoose";
-import userService from "./services/user-service";
-//import userService from "../services/user-service.js";
+import userService from "./services/user-service.js";
 
 //export DEBUG='express:router' if you want to see error messages from GET/POST requests
 
-/*
-const users = {
-    users_list: [
-      {
-        id: "xyz789",
-        name: "Charlie",
-        job: "Janitor"
-      },
-      {
-        id: "abc123",
-        name: "Mac",
-        job: "Bouncer"
-      },
-      {
-        id: "ppp222",
-        name: "Mac",
-        job: "Professor"
-      },
-      {
-        id: "yat999",
-        name: "Dee",
-        job: "Aspring actress"
-      },
-      {
-        id: "zap555",
-        name: "Dennis",
-        job: "Bartender"
-      }
-    ]
-};
-*/
 
 dotenv.config();
 
@@ -77,17 +45,6 @@ app.get("/users", (req, res) => {
       res.status(500).send("Get failed.");
       console.log(error);
     });
-  /*
-  IE3 incase this fails
-  const name = req.query.name;
-  if (name != undefined) {
-    let result = findUserByName(name);
-    result = { users_list: result };
-    res.send(result); //response for fetchUsers() in MyApp.jsx
-  } else {
-    res.send(users); //response for fetchUsers() in MyApp.jsx
-  }
-  */
 });
 
 //http post method (posts are not being saved after the server session ends!)
@@ -100,11 +57,6 @@ app.post("/users", (req, res) => {
     .catch((error) => {
       res.status(500).send("Post failed.");
       console.log(error);});
-  /*
-  // IE3 incase this fails
-  const newUser = addUser(userToAdd);
-  res.status(201).send(newUser); //When an object is passed to send, Express will automatically convert it to JSON.
-  */
 });
 
 // new enpoint to for getting users based on id
@@ -116,39 +68,17 @@ app.get("/users/:id", (req, res) => {
       res.status(404).send("Resource not found.");
       console.log(error);
     });
-  /*
-  IE3 incase this fails
-  const id = req.params["id"]; //or req.params.id
-  let result = findUserById(id); //method
-  if (result === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    res.send(result);
-  }
-  */
 });
 
 // new enpoint for deleting users based on id
 app.delete("/users/:id", (req, res) => {
   const id = req.params["id"]; //or req.params.id
-  userService.findIdAndDelete(id)
+  userService.deleteUser(id)
     .then((success) => {res.status(204).send(success);})
     .catch((error) => {
       res.status(404).send("Resource not found.");
       console.log(error);
     });
-  /*
-  IE3 incase this fails
-  const id = req.params["id"]; //or req.params.id
-  let result = findUserById(id); //method
-  if (result === undefined) {
-    res.status(404).send("Resource not found.");
-  } else {
-    deleteUser(result);
-    //send a 204 status code to indicate that the request has succeeded
-    res.status(204).send(result);
-  }
-  */
 });
 
 // new enpoint to for getting users based on name and job
@@ -168,6 +98,38 @@ app.listen(port, () => {
     `Example app listening at http://localhost:${port}`
   );
 });
+
+/*
+const users = {
+    users_list: [
+      {
+        id: "xyz789",
+        name: "Charlie",
+        job: "Janitor"
+      },
+      {
+        id: "abc123",
+        name: "Mac",
+        job: "Bouncer"
+      },
+      {
+        id: "ppp222",
+        name: "Mac",
+        job: "Professor"
+      },
+      {
+        id: "yat999",
+        name: "Dee",
+        job: "Aspring actress"
+      },
+      {
+        id: "zap555",
+        name: "Dennis",
+        job: "Bartender"
+      }
+    ]
+};
+*/
 
 /*
 //Find users through /users get endpoint
@@ -204,3 +166,43 @@ const deleteUser = (user) => {
   //return user;
 };
 */
+
+/*
+  IE3 incase this fails
+  const name = req.query.name;
+  if (name != undefined) {
+    let result = findUserByName(name);
+    result = { users_list: result };
+    res.send(result); //response for fetchUsers() in MyApp.jsx
+  } else {
+    res.send(users); //response for fetchUsers() in MyApp.jsx
+  }
+  */
+
+  /*
+  // IE3 incase this fails
+  const newUser = addUser(userToAdd);
+  res.status(201).send(newUser); //When an object is passed to send, Express will automatically convert it to JSON.
+  */
+ /*
+  IE3 incase this fails
+  const id = req.params["id"]; //or req.params.id
+  let result = findUserById(id); //method
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    res.send(result);
+  }
+  */
+ /*
+  IE3 incase this fails
+  const id = req.params["id"]; //or req.params.id
+  let result = findUserById(id); //method
+  if (result === undefined) {
+    res.status(404).send("Resource not found.");
+  } else {
+    deleteUser(result);
+    //send a 204 status code to indicate that the request has succeeded
+    res.status(204).send(result);
+  }
+  */
