@@ -67,6 +67,7 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+// endpoint finds: all users, users by name, users by job, users by name and job
 app.get("/users", (req, res) => {
   const name = req.query.name;
   const job = req.query.job;
